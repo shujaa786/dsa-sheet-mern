@@ -49,8 +49,9 @@ router.use((req, res, next) => {
 // get progress for current user
 router.get('/', async (req, res) => {
   try {
-    const user = await User.findById(req.user._id).populate('progress.problemId');
-    return res.json(user.progress || []);
+    const user = await User.findById(req.user._id);
+    if (!user || !user.userProgress) return res.json([]);
+    return res.json(user.userProgress.completed || []);
   } catch (err) {
     console.error('GET /progress error', err);
     return res.status(500).json({ error: 'Server error' });
@@ -72,17 +73,20 @@ router.post('/', async (req, res) => {
       return res.status(400).json({ error: 'problemId missing' });
     }
 
-    const user = await User.findById(req.user._1d || req.user._id); // small defensive fallback
+    const user = await User.findById(req.user._id);
     if (!user) return res.status(404).json({ error: 'User not found' });
 
-    const idx = user.progress.findIndex(p => p.problemId.toString() === problemId);
+    if (!user.userProgress) user.userProgress = { userId: req.user._id, completed: [] };
+    if (!user.userProgress.completed) user.userProgress.completed = [];
+
+    const idx = user.userProgress.completed.findIndex(p => p.problemId === problemId);
     if (idx >= 0) {
-      user.progress.splice(idx, 1);
+      user.userProgress.completed.splice(idx, 1);
     } else {
-      user.progress.push({ problemId, completedAt: new Date() });
+      user.userProgress.completed.push({ problemId, completedAt: new Date() });
     }
     await user.save();
-    return res.json(user.progress);
+    return res.json(user.userProgress.completed);
   } catch (err) {
     console.error('POST /progress error', err);
     return res.status(500).json({ error: 'Server error' });

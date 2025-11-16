@@ -27,7 +27,7 @@ const user = await User.create({ name, email, passwordHash });
 
 		res
 			.cookie('token', token, cookieOptions)
-			.json({ user: { id: user._id, name: user.name, email: user.email } });
+			.json({ user: { id: user._id, name: user.name, email: user.email }, token });
 } catch (err) {
 res.status(500).json({ msg: 'Server error' });
 }
@@ -53,7 +53,7 @@ if (!match) return res.status(400).json({ msg: 'Invalid credentials' });
 
 		res
 			.cookie('token', token, cookieOptions)
-			.json({ user: { id: user._id, name: user.name, email: user.email } });
+			.json({ user: { id: user._id, name: user.name, email: user.email }, token });
 } catch (err) {
 res.status(500).json({ msg: 'Server error' });
 }
