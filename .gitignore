@@ -1,0 +1,40 @@
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE / editor directories
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Node dependencies and logs
+/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Logs and runtime files
+logs/
+*.log
+pids/
+*.pid
+
+# Environment files
+.env
+.env.*
+
+# Build / cache / artifacts
+dist/
+build/
+coverage/
+.cache/
+.parcel-cache/
+.next/
+.vite/
+out/
+
+# Misc
+*.tgz
+*.gz
