@@ -1,34 +1,3 @@
-// import express from 'express';
-// import User from '../models/User.js';
-
-
-// const router = express.Router();
-
-
-// // get progress for current user
-// router.get('/', async (req, res) => {
-// const user = await User.findById(req.user._id).populate('progress.problemId');
-// res.json(user.progress || []);
-// });
-
-
-// // toggle completion
-// router.post('/', async (req, res) => {
-// const { problemId } = req.body;
-// const user = await User.findById(req.user._id);
-// const idx = user.progress.findIndex(p => p.problemId.toString() === problemId);
-// if (idx >= 0) {
-// user.progress.splice(idx, 1);
-// } else {
-// user.progress.push({ problemId, completedAt: new Date() });
-// }
-// await user.save();
-// res.json(user.progress);
-// });
-
-
-// export default router;
-
 import express from 'express';
 import User from '../models/User.js';
 
