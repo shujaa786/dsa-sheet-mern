@@ -1,18 +1,23 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
-const ProgressSchema = new Schema({
-problemId: { type: Schema.Types.ObjectId, ref: 'Problem' },
+const CompletedSchema = new Schema({
+problemId: String,
 completedAt: Date
-});
+}, { _id: false });
+
+const ProgressSchema = new Schema({
+userId: String,
+completed: [CompletedSchema]
+}, { _id: false });
 
 const UserSchema = new Schema({
+_id: String,
 name: { type: String, default: '' },
 email: { type: String, required: true, unique: true },
 passwordHash: { type: String, required: true },
-progress: [ProgressSchema]
+userProgress: ProgressSchema
 }, { timestamps: true });
-
 
 const User = mongoose.model('User', UserSchema);
 export default User;

@@ -1,0 +1,51 @@
+/* client/src/pages/dashboard.css */
+:root{
+  --blue:#1976d2;
+  --accent:#12c8e0;
+  --badge-red:#ff5a5f;
+  --badge-green:#28a745;
+}
+
+body { font-family: Inter, Arial, sans-serif; margin:0; padding:0; background:#fff; }
+
+/* topbar */
+.topbar{
+  background: var(--blue);
+  color:white;
+  padding:12px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.topbar .brand{ font-size:20px; font-weight:600; }
+.navlinks button{ margin-left:12px; background:transparent; color:white; border:1px solid rgba(255,255,255,0.2); padding:6px 10px; border-radius:6px; cursor:pointer;}
+.navlinks button.active{ background:rgba(255,255,255,0.12); }
+.navlinks .logout{ border:1px solid #fff; }
+
+/* container */
+.container{ max-width:1000px; margin:28px auto; padding: 0 16px; }
+
+/* cards */
+.card{ background:#fff; border:1px solid #eee; padding:18px; border-radius:8px; margin-bottom:16px; box-shadow:0 1px 3px rgba(0,0,0,0.04);}
+
+/* accordions */
+.accordion{ margin-bottom:12px; border-radius:8px; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.04); }
+.accordion-header{
+  background: linear-gradient(0deg, #13c3d9, #2ac8e0);
+  color:#fff; padding:12px 16px; display:flex; justify-content:space-between; align-items:center; cursor:pointer;
+}
+.accordion-header .badge{ margin-left:10px; padding:4px 8px; border-radius:8px; font-size:12px; background:var(--badge-red); color:white; }
+.accordion-header .badge.done{ background:var(--badge-green); }
+.accordion-body{ background: linear-gradient(#f0f9fb, #eaf7fb); padding:18px; }
+
+/* table */
+.table-wrap{ overflow:auto; }
+.subtable{ width:100%; border-collapse:collapse; min-width:800px; background:white; border-radius:6px; overflow:hidden;}
+.subtable th, .subtable td{ padding:10px 12px; border-bottom:1px solid #eee; text-align:left; font-size:14px; }
+.subtable thead th{ background:transparent; font-weight:700; color:#222; }
+.status.pending{ background:#ffdede; color:#a00; padding:6px 10px; border-radius:6px; font-size:13px; }
+.status.done{ background:#defada; color:#0a8b3a; padding:6px 10px; border-radius:6px; font-size:13px; }
+
+/* small utilities */
+.center{ text-align:center; padding:40px; }
+.chev{ opacity:0.9; font-size:18px; }

@@ -5,15 +5,14 @@ import Problem from '../models/Problem.js';
 const router = express.Router();
 
 
-// get all problems grouped by chapter
+// get all topics with subtopics
 router.get('/', async (req, res) => {
-const problems = await Problem.find({}).sort({ chapter: 1, order: 1 });
-const grouped = problems.reduce((acc, p) => {
-acc[p.chapter] = acc[p.chapter] || [];
-acc[p.chapter].push(p);
-return acc;
-}, {});
-res.json(grouped);
+try {
+const topics = await Problem.find({}).sort({ order: 1 });
+res.json({ topics });
+} catch (err) {
+res.status(500).json({ error: err.message });
+}
 });
 
 
