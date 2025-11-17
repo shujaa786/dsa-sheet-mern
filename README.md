@@ -124,9 +124,9 @@ Environment Variable (create .env in the client/ folder):
 
 | Variable             | Value / Example                                                               | Notes                                      |
 |----------------------|-------------------------------------------------------------------------------|--------------------------------------------|
-| `MONGO_URI`          | `mongodb+srv://user:pass@cluster.mongodb.net/dsa-sheet`                       | Your production MongoDB Atlas connection   |
-| `JWT_SECRET`         | `your_very_strong_random_secret_here_64+chars`                                | Keep secret!                               |
-| `CLIENT_ORIGIN`      | `https://main.d3655aq63mcd1k.amplifyapp.com`                                  | **No trailing slash!**                     |
+| `MONGO_URI`          | `your-mongodb-connection-string` | Your production MongoDB Atlas connection   |
+| `JWT_SECRET`         | `your_very_strong_random_secret`                                | Keep secret!                               |
+| `CLIENT_ORIGIN`      | `https://your-frontend-domain.com`                               | **No trailing slash!**                     |
 | `COOKIE_SECURE`      | `true`                                                                        | Required for `SameSite=None`               |
 | `COOKIE_SAME_SITE`   | `none`                                                                        | Allows cross-site cookies                  |
 | `NODE_ENV`           | `production`                                                                  | Optional but recommended                   |
@@ -140,7 +140,7 @@ Environment Variable (create .env in the client/ folder):
 
 | Variable               | Value                                                                 |
 |------------------------|-----------------------------------------------------------------------|
-| `REACT_APP_API_URL`    | `https://dsa-backend-env.eba-jfcs5nqc.us-east-1.elasticbeanstalk.com/api` |
+| `REACT_APP_API_URL`    | `(https://your-frontend-domain.com)` |
 
 > **Important HTTPS Rule**  
 > When `COOKIE_SECURE=true` and `COOKIE_SAME_SITE=none`:  
