@@ -5,11 +5,16 @@
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
 
-A **full-stack DSA practice tracker** built with the **MERN stack** (MongoDB, Express, React, Node.js). Track your progress across 450+ curated problems, organized by topics with YouTube solutions, LeetCode links, and difficulty levels.
+A **full-stack DSA practice tracker** built with the **MERN stack** (MongoDB, Express, React, Node.js).
+
+Solve and track your progress across 450+ curated problems, organized by topics with YouTube solutions, LeetCode links, and difficulty levels.
 
 **Live Demo** (when deployed):  
-Frontend: https://main.d3655aq63mcd1k.amplifyapp.com/login 
-Backend: https://dsa-backend-env.eba-jfcs5nqc.us-east-1.elasticbeanstalk.com
+Frontend:
+https://main.d3655aq63mcd1k.amplifyapp.com/login
+
+Backend API (CloudFront → Elastic Beanstalk):
+https://d355gi9xu9cucb.cloudfront.net/api
 
 ---
 
