@@ -57,7 +57,7 @@ cp .env.example .env
 
 npm install
 node seed.js        # optional: seed topics & test user
-node index.js       # starts on http://localhost:5000
+node index.js       # starts on http://localhost:8080
 ```
 
 #### 2. Frontend (`client/`)
@@ -75,7 +75,7 @@ npm install
 | **Backend** | `/server` | `npm install` | Install backend dependencies |
 | **Backend** | `/server` | `cp .env.example .env` | Create environment file |
 | **Backend** | `/server` | `node seed.js` | Seed default problems/topics (optional) |
-| **Backend** | `/server` | `node index.js` | Start backend server (default: port 5000) |
+| **Backend** | `/server` | `node index.js` | Start backend server (default: port 8080) |
 | **Backend** | `/server` | `npm run dev` *(if using nodemon)* | Auto-restart server during development |
 | **Frontend** | `/client` | `npm install` | Install frontend dependencies |
 | **Frontend** | `/client` | `npm start` | Run development server (port 3000) |
@@ -105,11 +105,11 @@ npm install
 
 | Purpose              | Command |
 |----------------------|---------|
-| **Health Check**     | `curl -i http://localhost:5000/api/health` |
-| **Login** (test account) | `curl -i -X POST http://localhost:5000/api/auth/login \<br>  -H "Content-Type: application/json" \<br>  -d '{"email":"test@demo.com","password":"password123"}'` |
-| **Save cookie & login** (recommended) | `curl -i -X POST http://localhost:5000/api/auth/login \<br>  -H "Content-Type: application/json" \<br>  -d '{"email":"test@demo.com","password":"password123"}' \<br>  --cookie-jar cookie.txt` |
-| **Fetch Problems** (with saved cookie) | `curl http://localhost:5000/api/problems --cookie cookie.txt` |
-| **Fetch User Progress** (authenticated) | `curl http://localhost:5000/api/progress --cookie cookie.txt` |
+| **Health Check**     | `curl -i http://localhost:8080/api/health` |
+| **Login** (test account) | `curl -i -X POST http://localhost:8080/api/auth/login \<br>  -H "Content-Type: application/json" \<br>  -d '{"email":"test@demo.com","password":"password123"}'` |
+| **Save cookie & login** (recommended) | `curl -i -X POST http://localhost:8080/api/auth/login \<br>  -H "Content-Type: application/json" \<br>  -d '{"email":"test@demo.com","password":"password123"}' \<br>  --cookie-jar cookie.txt` |
+| **Fetch Problems** (with saved cookie) | `curl http://localhost:8080/api/problems --cookie cookie.txt` |
+| **Fetch User Progress** (authenticated) | `curl http://localhost:8080/api/progress --cookie cookie.txt` |
 
 **Tip**: Use `--cookie-jar cookie.txt` on login to persist the HttpOnly session cookie, then reuse it with `--cookie cookie.txt` for authenticated requests.
 
@@ -140,7 +140,7 @@ npm install
 
 | Variable               | Value                                                                 |
 |------------------------|-----------------------------------------------------------------------|
-| `REACT_APP_API_URL`    | `(https://your-frontend-domain.com)` |
+| `REACT_APP_API_URL`    | `((https://example.cloudfront.net/api))` |
 
 > **Important HTTPS Rule**  
 > When `COOKIE_SECURE=true` and `COOKIE_SAME_SITE=none`:  
@@ -159,7 +159,7 @@ A demo user is automatically created when you run `node seed.js` (or on first de
 
 **Quick login (cURL)**  
 ```bash
-curl -i -X POST http://localhost:5000/api/auth/login \
+curl -i -X POST http://localhost:8080/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{"email":"test@demo.com","password":"password123"}' \
   --cookie-jar cookie.txt
