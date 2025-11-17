@@ -36,9 +36,28 @@ app.use(morgan('dev'));
 app.set('trust proxy', 1);
 
 // CORS (allow credentials so cookies can be sent)
+const PROD_ORIGIN = process.env.CLIENT_ORIGIN;
+const DEV_ORIGINS = ['http://localhost:3000', 'http://127.0.0.1:3000'];
+
+// Build allowed list, prefer explicit entries
+const allowedOrigins = [];
+if (PROD_ORIGIN) allowedOrigins.push(PROD_ORIGIN);
+allowedOrigins.push(...DEV_ORIGINS);
+
 app.use(cors({
-  origin: process.env.CLIENT_ORIGIN || 'http://localhost:3000',
+  origin: (origin, callback) => {
+    // If no origin (curl/Postman/server-to-server) allow it
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+
+    // For debugging: print origin and return error to client
+    console.warn('CORS blocked origin:', origin);
+    return callback(new Error('CORS not allowed for origin: ' + origin));
+  },
   credentials: true,
+  methods: ['GET','POST','PUT','DELETE','OPTIONS'],
+  allowedHeaders: ['Content-Type','Authorization','Accept','Origin','X-Requested-With']
 }));
 
 // Rate limiter (placed after trust proxy)

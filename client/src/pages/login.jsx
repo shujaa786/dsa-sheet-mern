@@ -2,8 +2,9 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import API from '../api';
 import { AuthContext } from '../contexts/AuthContext';
+import '../styles/dashboard.css';
 
-export default function Login(){
+export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const nav = useNavigate();
@@ -24,13 +25,31 @@ export default function Login(){
   };
 
   return (
-    <div style={{ maxWidth:420, margin:'40px auto', padding:20 }}>
-      <h2>Login</h2>
-      <form onSubmit={submit}>
-        <input placeholder="Email" value={email} onChange={e=>setEmail(e.target.value)} style={{width:'100%',padding:8,marginBottom:8}}/>
-        <input placeholder="Password" type="password" value={password} onChange={e=>setPassword(e.target.value)} style={{width:'100%',padding:8,marginBottom:8}}/>
-        <button style={{width:'100%',padding:10}} type="submit">Login</button>
-      </form>
+    <div className="login-wrapper">
+      <div className="card login-card">
+        <h2>Login</h2>
+        <form onSubmit={submit}>
+          <input
+            className="login-input"
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <input
+            className="login-input"
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <button type="submit" className="login-btn">
+            Login
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

@@ -8,7 +8,7 @@
 A **full-stack DSA practice tracker** built with the **MERN stack** (MongoDB, Express, React, Node.js). Track your progress across 450+ curated problems, organized by topics with YouTube solutions, LeetCode links, and difficulty levels.
 
 **Live Demo** (when deployed):  
-Frontend: https://main.d3655aq63mcd1k.amplifyapp.com  
+Frontend: https://main.d3655aq63mcd1k.amplifyapp.com/login 
 Backend: https://dsa-backend-env.eba-jfcs5nqc.us-east-1.elasticbeanstalk.com
 
 ---
@@ -62,11 +62,6 @@ cd client
 npm install
 ```
 
-Environment Variable (create .env in the client/ folder):
-
-| Variable               | Value                                                                 |
-|------------------------|-----------------------------------------------------------------------|
-| `REACT_APP_API_URL`    | `https://dsa-backend-env.eba-jfcs5nqc.us-east-1.elasticbeanstalk.com/api` |
 
 ## 🔧 Run Commands (Backend + Frontend)
 
