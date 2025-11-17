@@ -1,57 +1,201 @@
-:root{
-  --blue:#1976d2;
-  --accent:#12c8e0;
-  --badge-red:#ff5a5f;
-  --badge-green:#28a745;
+:root {
+  --blue: #1976d2;
+  --accent: #12c8e0;
+  --badge-red: #ff5a5f;
+  --badge-green: #28a745;
 }
 
-body { font-family: Inter, Arial, sans-serif; margin:0; padding:0; background:#fff; }
-
-/* container */
-.container{ max-width:1000px; margin:28px auto; padding: 0 16px; }
-
-/* cards */
-.card{ background:#fff; border:1px solid #eee; padding:18px; border-radius:8px; margin-bottom:16px; box-shadow:0 1px 3px rgba(0,0,0,0.04);}
-
-/* accordions */
-.accordion{ margin-bottom:12px; border-radius:8px; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.04); }
-.accordion-header{
-  background: linear-gradient(0deg, #13c3d9, #2ac8e0);
-  color:#fff; padding:12px 16px; display:flex; justify-content:space-between; align-items:center; cursor:pointer;
+body {
+  font-family: Inter, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #fff;
 }
-.accordion-header .badge{ margin-left:10px; padding:4px 8px; border-radius:8px; font-size:12px; background:var(--badge-red); color:white; }
-.accordion-header .badge.done{ background:var(--badge-green); }
-.accordion-body{ background: linear-gradient(#f0f9fb, #eaf7fb); padding:18px; }
 
-/* table */
-.table-wrap{ overflow:auto; }
-.subtable{ width:100%; border-collapse:collapse; min-width:800px; background:white; border-radius:6px; overflow:hidden;}
-.subtable th, .subtable td{ padding:10px 12px; border-bottom:1px solid #eee; text-align:left; font-size:14px; }
-.subtable thead th{ background:transparent; font-weight:700; color:#222; }
-.status.pending{ background:#ffdede; color:#a00; padding:6px 10px; border-radius:6px; font-size:13px; }
-.status.done{ background:#defada; color:#0a8b3a; padding:6px 10px; border-radius:6px; font-size:13px; }
+/* Layout */
+.container {
+  max-width: 1000px;
+  margin: 28px auto;
+  padding: 0 16px;
+}
 
-/* small utilities */
-.center{ text-align:center; padding:40px; }
-.chev{ opacity:0.9; font-size:18px; }
+/* Cards */
+.card {
+  background: #fff;
+  border: 1px solid #eee;
+  padding: 18px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
 
-/* Navbar */
-.topbar{
+/* ==================== LOGIN PAGE STYLES ==================== */
+.login-wrapper {
+  max-width: 460px;
+  margin: 60px auto;
+  padding: 0 16px;
+}
+
+.login-card {
+  padding: 36px 32px;
+  text-align: center;
+}
+
+.login-card h2 {
+  margin: 0 0 28px 0;
+  font-size: 26px;
+  color: #222;
+  font-weight: 600;
+}
+
+.login-input {
+  width: 100%;
+  padding: 13px 14px;
+  margin-bottom: 16px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 15px;
+  box-sizing: border-box;
+  transition: all 0.2s;
+}
+
+.login-input:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.15);
+}
+
+.login-btn {
+  width: 100%;
+  padding: 13px;
   background: var(--blue);
   color: white;
-  padding:12px 20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 8px;
 }
 
-.navlinks{
-  display:flex;
-  align-items:center;
-  gap:12px;
+.login-btn:hover {
+  background: #1565c0;
 }
 
-/* Links (NavLink) when selected */
+.login-btn:active {
+  background: #0d47a1;
+}
+
+/* ==================== END LOGIN STYLES ==================== */
+
+/* Accordions */
+.accordion {
+  margin-bottom: 12px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.accordion-header {
+  background: linear-gradient(0deg, #13c3d9, #2ac8e0);
+  color: #fff;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.accordion-header .badge {
+  margin-left: 10px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  background: var(--badge-red);
+  color: white;
+}
+
+.accordion-header .badge.done {
+  background: var(--badge-green);
+}
+
+.accordion-body {
+  background: linear-gradient(#f0f9fb, #eaf7fb);
+  padding: 18px;
+}
+
+/* Tables */
+.table-wrap {
+  overflow: auto;
+}
+
+.subtable {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+  background: white;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.subtable th,
+.subtable td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+  font-size: 14px;
+}
+
+.subtable thead th {
+  background: transparent;
+  font-weight: 700;
+  color: #222;
+}
+
+.status.pending {
+  background: #ffdede;
+  color: #a00;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.status.done {
+  background: #defada;
+  color: #0a8b3a;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+/* Utilities */
+.center {
+  text-align: center;
+  padding: 40px;
+}
+
+.chev {
+  opacity: 0.9;
+  font-size: 18px;
+}
+
+/* Navbar */
+.topbar {
+  background: var(--blue);
+  color: white;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navlinks {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
 .navlinks a,
 .navlinks button {
   color: white;
@@ -65,17 +209,18 @@ body { font-family: Inter, Arial, sans-serif; margin:0; padding:0; background:#f
   align-items: center;
   font-size: 13px;
 }
+
 .navlinks a.active,
 .navlinks button.active {
-  background: rgba(255,255,255,0.2);
-  border: 1px solid rgba(255,255,255,0.9);
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.9);
 }
 
-/* Logout button style*/
 .navlinks .logout {
   border: 1px solid #fff;
   background: transparent;
 }
 
-.topbar .brand { margin-right: 24px; }
-.topbar .navlinks { gap: 14px; }
+.topbar .brand {
+  margin-right: 24px;
+}
