@@ -55,116 +55,112 @@ node seed.js        # optional: seed topics & test user
 node index.js       # starts on http://localhost:5000
 ```
 
-#### 2. Frontend (client/)
+#### 2. Frontend (`client/`)
 
-
-Open terminal:
-
+```bash
 cd client
 npm install
+```
+
+Environment Variable (create .env in the client/ folder):
+
+| Variable               | Value                                                                 |
+|------------------------|-----------------------------------------------------------------------|
+| `REACT_APP_API_URL`    | `https://dsa-backend-env.eba-jfcs5nqc.us-east-1.elasticbeanstalk.com/api` |
+
+## 🔧 Run Commands (Backend + Frontend)
+
+| Environment | Location | Command | Purpose |
+|------------|----------|---------|---------|
+| **Backend** | `/server` | `npm install` | Install backend dependencies |
+| **Backend** | `/server` | `cp .env.example .env` | Create environment file |
+| **Backend** | `/server` | `node seed.js` | Seed default problems/topics (optional) |
+| **Backend** | `/server` | `node index.js` | Start backend server (default: port 5000) |
+| **Backend** | `/server` | `npm run dev` *(if using nodemon)* | Auto-restart server during development |
+| **Frontend** | `/client` | `npm install` | Install frontend dependencies |
+| **Frontend** | `/client` | `npm start` | Run development server (port 3000) |
+| **Frontend** | `/client` | `npm run build` | Create production build |
+| **API Tests** | Any | `curl -i <API_URL>/api/health` | Test backend health |
+| **API Tests** | Any | `curl -X POST <API_URL>/api/auth/login` | Test login route |
+| **Production** | AWS EB | `eb deploy` | Deploy backend to Elastic Beanstalk |
+| **Production** | AWS Amplify | Auto-build | Deploy frontend (Amplify watches repo) |
 
 
-Local dev:
-
-npm start
 
 
-Production build:
+### API Endpoints
 
-npm run build
-
-
-Frontend default URL: http://localhost:3000
-
-Frontend env file (/client/.env):
-
-REACT_APP_API_URL=http://localhost:5000/api
-
-🔁 API overview
-
-Auth
-
-POST /api/auth/login — login (returns cookie or token)
-
-GET /api/auth/logout — logout
-
-Problems / Topics
-
-GET /api/problems — list topics & problems
-
-GET /api/problems/:topic — problems by topic
-
-Progress (protected)
-
-GET /api/progress — user progress
-
-PUT /api/progress/update — update a problem progress
-
-Health
-
-GET /api/health
-
-🧪 Quick tests (curl)
-
-Health:
-
-curl -i http://localhost:5000/api/health
+| Method | Endpoint                | Description                          | Auth Required |
+|--------|-------------------------|--------------------------------------|---------------|
+| `POST` | `/api/auth/login`       | Login (sets HttpOnly cookie)         | No            |
+| `GET`  | `/api/auth/logout`      | Clear cookie                         | No            |
+| `GET`  | `/api/problems`         | Get all topics & problems            | No            |
+| `GET`  | `/api/problems/:topic`  | Problems by topic                    | No            |
+| `GET`  | `/api/progress`         | Get current user progress            | Yes           |
+| `PUT`  | `/api/progress/update`  | Update problem status                | Yes           |
+| `GET`  | `/api/health`           | Health check                         | No            |
 
 
-Login (example):
+### Quick Tests (cURL)
 
+| Purpose              | Command |
+|----------------------|---------|
+| **Health Check**     | `curl -i http://localhost:5000/api/health` |
+| **Login** (test account) | `curl -i -X POST http://localhost:5000/api/auth/login \<br>  -H "Content-Type: application/json" \<br>  -d '{"email":"test@demo.com","password":"password123"}'` |
+| **Save cookie & login** (recommended) | `curl -i -X POST http://localhost:5000/api/auth/login \<br>  -H "Content-Type: application/json" \<br>  -d '{"email":"test@demo.com","password":"password123"}' \<br>  --cookie-jar cookie.txt` |
+| **Fetch Problems** (with saved cookie) | `curl http://localhost:5000/api/problems --cookie cookie.txt` |
+| **Fetch User Progress** (authenticated) | `curl http://localhost:5000/api/progress --cookie cookie.txt` |
+
+**Tip**: Use `--cookie-jar cookie.txt` on login to persist the HttpOnly session cookie, then reuse it with `--cookie cookie.txt` for authenticated requests.
+
+### ☁️ Production Deployment
+
+#### Backend – AWS Elastic Beanstalk
+- **Platform**: Node.js 22 running on 64bit Amazon Linux 2023  
+- **Recommended**: Put **CloudFront** (or an ALB with HTTPS) in front of Elastic Beanstalk for proper HTTPS termination  
+- **Port**: Your app must listen on `process.env.PORT` (EB sets this to `8080`)
+
+**Required Environment Variables (set in EB Console → Configuration → Software):**
+
+| Variable             | Value / Example                                                               | Notes                                      |
+|----------------------|-------------------------------------------------------------------------------|--------------------------------------------|
+| `MONGO_URI`          | `mongodb+srv://user:pass@cluster.mongodb.net/dsa-sheet`                       | Your production MongoDB Atlas connection   |
+| `JWT_SECRET`         | `your_very_strong_random_secret_here_64+chars`                                | Keep secret!                               |
+| `CLIENT_ORIGIN`      | `https://main.d3655aq63mcd1k.amplifyapp.com`                                  | **No trailing slash!**                     |
+| `COOKIE_SECURE`      | `true`                                                                        | Required for `SameSite=None`               |
+| `COOKIE_SAME_SITE`   | `none`                                                                        | Allows cross-site cookies                  |
+| `NODE_ENV`           | `production`                                                                  | Optional but recommended                   |
+| `PORT`               | `8080`                                                                        | EB injects this automatically              |
+
+#### Frontend – AWS Amplify (Recommended)
+- Connect your GitHub/GitLab repo → Amplify auto-detects Vite/React
+- One-click HTTPS + global CDN
+
+**Frontend Environment Variable (set in Amplify Console → Environment variables):**
+
+| Variable               | Value                                                                 |
+|------------------------|-----------------------------------------------------------------------|
+| `REACT_APP_API_URL`    | `https://dsa-backend-env.eba-jfcs5nqc.us-east-1.elasticbeanstalk.com/api` |
+
+> **Important HTTPS Rule**  
+> When `COOKIE_SECURE=true` and `COOKIE_SAME_SITE=none`:  
+> → **Both** frontend **and** backend **must be served over HTTPS**  
+> → Use **CloudFront** in front of Elastic Beanstalk (or switch to ALB + ACM certificate)
+
+
+### Test Account (Pre-seeded)
+
+A demo user is automatically created when you run `node seed.js` (or on first deployment if your seed script is included).
+
+| Field     | Value               |
+|-----------|---------------------|
+| **Email**    | `test@demo.com`     |
+| **Password** | `password123`       |
+
+**Quick login (cURL)**  
+```bash
 curl -i -X POST http://localhost:5000/api/auth/login \
   -H "Content-Type: application/json" \
-  -d '{"email":"test@demo.com","password":"password123"}'
+  -d '{"email":"test@demo.com","password":"password123"}' \
+  --cookie-jar cookie.txt
 
-
-Fetch problems:
-
-curl http://localhost:5000/api/problems
-
-☁️ Deployment (production)
-Backend
-
-Elastic Beanstalk running Node.js 22
-
-Optionally place CloudFront in front of the EB URL for HTTPS
-
-Frontend
-
-Deploy on AWS Amplify, Netlify, or S3+CloudFront
-
-Important production env vars (server)
-MONGO_URI=<production mongo uri>
-JWT_SECRET=<strong secret>
-CLIENT_ORIGIN=https://<your-frontend-domain>     # exact origin, no trailing slash
-COOKIE_SECURE=true
-COOKIE_SAME_SITE=none
-
-Frontend (Amplify) env
-REACT_APP_API_URL=https://<your-api-domain>/api
-
-
-Note: If frontend is served over HTTPS, the API must be HTTPS (CloudFront or ALB). Cookies with SameSite=None must be Secure.
-
-🔐 Test account
-
-Use this credential for quick testing (seeded):
-
-{
-  "email": "test@demo.com",
-  "password": "password123"
-}
-
-🤝 Contributing
-
-PRs and issues are welcome. Please open an issue for:
-
-Bug reports
-
-Feature requests
-
-Docs or sample data improvements
-
-📄 License
-
-MIT License
