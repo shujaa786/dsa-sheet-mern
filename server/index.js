@@ -48,12 +48,12 @@ app.use('/api/auth', authRoutes);
 app.use('/api/problems', problemRoutes);
 app.use('/api/progress', authMiddleware, progressRoutes);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080;
 const MONGO = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/dsa_sheet';
 
 
 mongoose.connect(MONGO, { useNewUrlParser: true, useUnifiedTopology: true })
-.then(() => app.listen(PORT, () => console.log(`Server started on ${PORT}`)))
+.then(() => app.listen(PORT, '0.0.0.0', () => console.log(`Server started on ${PORT}`)))
 .catch(err => {
 console.error('MongoDB connection error:', err.message);
 process.exit(1);
